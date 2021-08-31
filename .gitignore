@@ -3,6 +3,8 @@
 
 # Dependency directories
 /node_modules
+/studio/node_modules
+/web/node_modules
 
 # lerna files
 /lerna-debug.log
