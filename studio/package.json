@@ -27,7 +27,8 @@
     "react": "^16.2",
     "react-dom": "^16.2",
     "react-icons": "^3.11.0",
-    "sanity-plugin-intl-input": "^5.0.0"
+    "sanity-plugin-intl-input": "^5.0.0",
+    "sanity-plugin-seo-pane": "^1.2.2"
   },
   "devDependencies": {
     "@sanity/cli": "^2.0.5"
