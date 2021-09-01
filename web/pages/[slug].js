@@ -1,4 +1,5 @@
 // ./web/pages/[slug].js
+import Link from "next/link";
 
 import React from "react";
 import { groq } from "next-sanity";
@@ -48,7 +49,7 @@ export async function getStaticPaths() {
  * It's set by Next.js "Preview Mode"
  * It does not need to be set or changed here
  */
-export async function getStaticProps({ params, preview = false }) {
+export async function getStaticProps({ params, preview = true }) {
   const query = groq`*[_type == "article" && slug.current == $slug]`;
   const queryParams = { slug: params.slug };
   const data = await getClient(preview).fetch(query, queryParams);
@@ -74,8 +75,6 @@ export async function getStaticProps({ params, preview = false }) {
  * the preview content on the client-side
  */
 export default function Page({ data, preview }) {
-  console.log("d a t a", data);
-
   const { data: previewData } = usePreviewSubscription(data?.query, {
     params: data?.queryParams ?? {},
     // The hook will return this on first render
@@ -88,8 +87,6 @@ export default function Page({ data, preview }) {
   // Client-side uses the same query, so we may need to filter it down again
   const page = filterDataToSingleItem(previewData, preview);
 
-  console.log("p a g e", page);
-
   // Notice the optional?.chaining conditionals wrapping every piece of content?
   // This is extremely important as you can't ever rely on a single field
   // of data existing when Editors are creating new documents.
@@ -98,6 +95,7 @@ export default function Page({ data, preview }) {
     <div style={{ maxWidth: `20rem`, padding: `1rem` }}>
       {page?.title && <h1>{page.title.en_GB}</h1>}
       {page?.content && <p>{page.content.en_GB}</p>}
+      {preview && <Link href="/api/exit-preview">Preview Mode Activated!</Link>}
     </div>
   );
 }
