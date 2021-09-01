@@ -42,19 +42,27 @@ import {
 
 export const getDefaultDocumentNode = (props) => {
   if (props.schemaType === "post") {
-    return S.document().views(
-      I18nS.getDocumentNodeViewsForSchemaType(props.schemaType)
-    );
+    return S.document().views([
+      ...I18nS.getDocumentNodeViewsForSchemaType(props.schemaType),
+      S.view
+        .component(SeoPane)
+        .options({
+          keywords: `seo.keywords`,
+          synonyms: `seo.synonyms`,
+          url: (doc) => resolveProductionUrl(doc),
+        })
+        .title("SEO"),
+    ]);
   }
   return S.document().views([
-    S.view
+    /*     S.view
       .component(SeoPane)
       .options({
         keywords: `seo.keywords`,
         synonyms: `seo.synonyms`,
         url: (doc) => resolveProductionUrl(doc),
       })
-      .title("SEO"),
+      .title("SEO"), */
   ]);
 };
 
