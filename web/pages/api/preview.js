@@ -4,8 +4,13 @@ export default function preview(req, res) {
   res.setHeader("Access-Control-Allow-Origin", corsOrigin);
   res.setHeader("Access-Control-Allow-Credentials", true);
 
+  // Fetch the preview-page's HTML and return in an object
+  if (req?.query?.fetch === "true") {
+    return res.status(200).json({});
+  }
+
   if (!req?.query?.secret) {
-    return res.status(401).json({ message: "No secret token" });
+    return res.status(401).json({ message: `No secret token ${req.method}` });
   }
 
   // Check the secret and next parameters
