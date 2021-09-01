@@ -2,6 +2,7 @@ import S from "@sanity/desk-tool/structure-builder";
 import * as I18nS from "sanity-plugin-intl-input/lib/structure";
 import { i18n } from "./schemas/documentTranslation";
 import SeoPane from "sanity-plugin-seo-pane";
+import resolveProductionUrl from "./resolveProductionUrl";
 
 import {
   GrDocumentText as FieldIcon,
@@ -45,7 +46,16 @@ export const getDefaultDocumentNode = (props) => {
       I18nS.getDocumentNodeViewsForSchemaType(props.schemaType)
     );
   }
-  return S.document().views([]);
+  return S.document().views([
+    S.view
+      .component(SeoPane)
+      .options({
+        keywords: `seo.keywords`,
+        synonyms: `seo.synonyms`,
+        url: (doc) => resolveProductionUrl(doc),
+      })
+      .title("SEO"),
+  ]);
 };
 
 export default () =>

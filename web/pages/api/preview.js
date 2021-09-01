@@ -1,4 +1,9 @@
 export default function preview(req, res) {
+  const corsOrigin = `http://localhost:3333`;
+
+  res.setHeader("Access-Control-Allow-Origin", corsOrigin);
+  res.setHeader("Access-Control-Allow-Credentials", true);
+
   if (!req?.query?.secret) {
     return res.status(401).json({ message: "No secret token" });
   }
