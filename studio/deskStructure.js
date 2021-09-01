@@ -11,30 +11,41 @@ import {
   GrArticle as ArticleIcon,
 } from "react-icons/gr";
 
-export const getDefaultDocumentNode = (props) => {
+// To test sanity-plugin-seo-pane. Replace with this.
+
+/* export const getDefaultDocumentNode = (props) => {
   if (props.schemaType === "post") {
-    return S.document().views(
-      I18nS.getDocumentNodeViewsForSchemaType(props.schemaType)
-      /*    , S.view
+    return S.document().views([
+      I18nS.getDocumentNodeViewsForSchemaType(props.schemaType)[0],
+      S.view
         .component(SeoPane)
         .options({
           keywords: `seo.keywords`,
           synonyms: `seo.synonyms`,
           url: (doc) => resolveProductionUrl(doc),
         })
-        .title("SEO"), */
-    );
+        .title("SEO"),
+    ]);
   }
   return S.document().views([
-    /*     S.view
+    S.view
       .component(SeoPane)
       .options({
         keywords: `seo.keywords`,
         synonyms: `seo.synonyms`,
         url: (doc) => resolveProductionUrl(doc),
       })
-      .title("SEO"), */
+      .title("SEO"),
   ]);
+}; */
+
+export const getDefaultDocumentNode = (props) => {
+  if (props.schemaType === "post") {
+    return S.document().views(
+      I18nS.getDocumentNodeViewsForSchemaType(props.schemaType)
+    );
+  }
+  return S.document().views([]);
 };
 
 export default () =>
