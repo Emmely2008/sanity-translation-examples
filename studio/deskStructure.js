@@ -55,14 +55,16 @@ export const getDefaultDocumentNode = (props) => {
     ]);
   }
   return S.document().views([
-    /*     S.view
+    S.view.form(),
+    S.view
       .component(SeoPane)
       .options({
         keywords: `seo.keywords`,
         synonyms: `seo.synonyms`,
         url: (doc) => resolveProductionUrl(doc),
       })
-      .title("SEO"), */
+      .title("SEO"),
+    ,
   ]);
 };
 
