@@ -1,12 +1,30 @@
-export default function preview(req, res) {
-  const corsOrigin = `http://localhost:3333`;
+// export const sendVerificationEmail = async () =>
+export default async function preview(req, res) {
+  // For sanity-plugin-seo-pane. Fetch the preview-page's HTML and return in an object
+
+  const corsOrigin =
+    process.env.NODE_ENV === "development"
+      ? `http://localhost:3333`
+      : `https://your-studio.sanity.studio`;
 
   res.setHeader("Access-Control-Allow-Origin", corsOrigin);
   res.setHeader("Access-Control-Allow-Credentials", true);
 
-  // Fetch the preview-page's HTML and return in an object
   if (req?.query?.fetch === "true") {
-    return res.status(200).json({});
+    const proto =
+      process.env.NODE_ENV === "development" ? `http://` : `https://`;
+    const host = req.headers.host;
+    const pathname = req?.query?.slug ? `/${req.query.slug}` : `/`;
+    const absoluteUrl = new URL(`${proto}${host}${pathname}`).toString();
+
+    const previewHtml = await fetch(absoluteUrl, {
+      credentials: `include`,
+      headers: { Cookie: req.headers.cookie },
+    })
+      .then((previewRes) => previewRes.text())
+      .catch((err) => console.error(err));
+
+    return res.send(previewHtml);
   }
 
   if (!req?.query?.secret) {

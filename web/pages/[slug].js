@@ -1,5 +1,6 @@
 // ./web/pages/[slug].js
 import Link from "next/link";
+import Head from "next/head";
 
 import React from "react";
 import { groq } from "next-sanity";
@@ -92,9 +93,28 @@ export default function Page({ data, preview }) {
   // of data existing when Editors are creating new documents.
   // It'll be completely blank when they start!
   return (
-    <div style={{ maxWidth: `20rem`, padding: `1rem` }}>
+    <div style={{ maxWidth: `20rem`, padding: `1rem` }} data-content="main">
+      <Head>
+        <meta
+          name="description"
+          content="Meta description content goes here."
+        />
+      </Head>
       {page?.title && <h1>{page.title.en_GB}</h1>}
       {page?.content && <p>{page.content.en_GB}</p>}
+      <p>
+        When you start a sentence with ‘as a result’, your reader will
+        immediately know two things: What happened in the first sentence caused
+        something; The second sentence is going to describe the effect. By using
+        the phrase ‘as a result’ here, you show that the two separate sentences
+        are part of one process. Without having even read the rest of the
+        sentence, your reader can already guess what’s coming. In a way,
+        transition words are the glue that holds your text together. Without
+        them, your text is a collection of sentences. With them, the individual
+        parts come together to form one whole. Transition words don’t always
+        have to be placed at the beginning of a sentence. Consider the following
+        examples.
+      </p>
       {preview && <Link href="/api/exit-preview">Preview Mode Activated!</Link>}
     </div>
   );
